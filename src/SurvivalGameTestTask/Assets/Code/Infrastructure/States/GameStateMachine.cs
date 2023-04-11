@@ -16,7 +16,8 @@ namespace Code.Infrastructure.States
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IHudFactory>(), services.Single<IInventoryFactory>()),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IHudFactory>(),
+          services.Single<IInventoryFactory>(), services.Single<ISlotFactory>()),
       };
     }
 

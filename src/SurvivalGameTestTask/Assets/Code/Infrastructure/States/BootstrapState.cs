@@ -31,6 +31,7 @@ namespace Code.Infrastructure.States
     {
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>()));
+      _services.RegisterSingle<ISlotFactory>(new SlotFactory(_services.Single<IAssetProvider>()));
       _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(_services.Single<IAssetProvider>()));
     }
   }

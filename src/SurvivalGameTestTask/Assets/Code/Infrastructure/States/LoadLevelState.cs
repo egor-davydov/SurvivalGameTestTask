@@ -10,18 +10,21 @@ namespace Code.Infrastructure.States
     private readonly SceneLoader _sceneLoader;
     private readonly IHudFactory _hudFactory;
     private readonly IInventoryFactory _inventoryFactory;
+    private readonly ISlotFactory _slotFactory;
 
     public LoadLevelState(
       GameStateMachine stateMachine,
       SceneLoader sceneLoader,
       IHudFactory hudFactory,
-      IInventoryFactory inventoryFactory
+      IInventoryFactory inventoryFactory,
+      ISlotFactory slotFactory
     )
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
       _hudFactory = hudFactory;
       _inventoryFactory = inventoryFactory;
+      _slotFactory = slotFactory;
     }
 
     public void Enter(string sceneName)
@@ -38,6 +41,11 @@ namespace Code.Infrastructure.States
     {
       GameObject hud = InitializeHud();
       InitializeInventory(hud);
+      InitializeSlots();
+    }
+
+    private void InitializeSlots()
+    {
     }
 
     private GameObject InitializeHud()
