@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Code.Services;
 
 namespace Code.Infrastructure.States
 {
@@ -9,7 +10,7 @@ namespace Code.Infrastructure.States
 
     private IExitableState _currentState;
 
-    public GameStateMachine(SceneLoader sceneLoader)
+    public GameStateMachine(SceneLoader sceneLoader, AllServices services)
     {
       _states = new Dictionary<Type, IExitableState>
       {
