@@ -1,5 +1,8 @@
 using System;
+using Code.Services.StaticData;
+using Code.StaticData;
 using Code.UI.Factories;
+using Code.UI.InventoryWithSlots;
 using UnityEngine;
 
 namespace Code.Infrastructure.States
@@ -8,6 +11,7 @@ namespace Code.Infrastructure.States
   {
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
+    private readonly IStaticDataService _staticData;
     private readonly IHudFactory _hudFactory;
     private readonly IInventoryFactory _inventoryFactory;
     private readonly ISlotFactory _slotFactory;
@@ -15,6 +19,7 @@ namespace Code.Infrastructure.States
     public LoadLevelState(
       GameStateMachine stateMachine,
       SceneLoader sceneLoader,
+      IStaticDataService staticData,
       IHudFactory hudFactory,
       IInventoryFactory inventoryFactory,
       ISlotFactory slotFactory
@@ -22,6 +27,7 @@ namespace Code.Infrastructure.States
     {
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
+      _staticData = staticData;
       _hudFactory = hudFactory;
       _inventoryFactory = inventoryFactory;
       _slotFactory = slotFactory;
@@ -40,12 +46,16 @@ namespace Code.Infrastructure.States
     private void InitializeLevel()
     {
       GameObject hud = InitializeHud();
-      InitializeInventory(hud);
-      InitializeSlots();
+      Inventory inventory = InitializeInventory(hud);
+      InitializeSlots(inventory);
     }
 
-    private void InitializeSlots()
+    private void InitializeSlots(Inventory inventory)
     {
+      InventoryStaticData inventoryData = _staticData.ForInventory();
+      int slotsQuantity = inventoryData.SlotsQuantity - inventoryData.LockedSlotsQuantity;
+      for (int slotNumber = 0; slotNumber < slotsQuantity; slotNumber++) 
+        _slotFactory.CreateSlot(inventory.SlotsParent);
     }
 
     private GameObject InitializeHud()
@@ -53,9 +63,10 @@ namespace Code.Infrastructure.States
       return _hudFactory.CreateHud();
     }
 
-    private void InitializeInventory(GameObject hud)
+    private Inventory InitializeInventory(GameObject hud)
     {
-      _inventoryFactory.CreateInventory(hud.transform);
+      Inventory inventory = _inventoryFactory.CreateInventory(hud.transform);
+      return inventory;
     }
 
     public void Exit()
