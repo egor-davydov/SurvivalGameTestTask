@@ -1,4 +1,5 @@
 using System;
+using Code.Infrastructure.AssetManagement;
 using Code.Services;
 using Code.UI.Factories;
 
@@ -28,7 +29,9 @@ namespace Code.Infrastructure.States
 
     private void RegisterServices()
     {
-      _services.RegisterSingle<IHudFactory>(new HudFactory());
+      _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+      _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>()));
+      _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(_services.Single<IAssetProvider>()));
     }
   }
 }
