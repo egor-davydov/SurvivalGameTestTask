@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Code.Services;
 using Code.Services.StaticData;
 using Code.StaticData;
 using Code.UI.Factories;
@@ -24,6 +23,28 @@ namespace Code.UI.Services
     public void Initialize(Inventory inventory)
     {
       _inventory = inventory;
+    }
+
+    public void AddStacksOf(ItemType itemType)
+    {
+      List<ItemStaticData> itemsOfCertainType = _staticData.ForItemsOfCertainType(itemType);
+      foreach (ItemStaticData itemStaticData in itemsOfCertainType)
+      {
+        InventoryItem inventoryItem = CreateItem();
+        inventoryItem.Initialize(itemStaticData, itemStaticData.MaxQuantityInStack);
+
+        PutInInventory(inventoryItem);
+      }
+    }
+
+    public void ClearRandomSlot() => 
+      _inventory.ClearRandomSlot();
+
+    public void DecreaseRandomItem(ItemType itemType, int quantity)
+    {
+      ItemStaticData randomItemOfCertainType = RandomItemOfCertainType(itemType);
+      _inventory.DecreaseItemQuantity(randomItemOfCertainType.Id, quantity);
+
     }
 
     public void AddRandom(ItemType itemType, int quantity)

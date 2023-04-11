@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Code.UI.Services;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace Code.UI.InventoryWithSlots
       get => _slotsParent;
       set => _slotsParent = value;
     }
+    private List<InventorySlot> OccupiedSlots => _slots.Where(x => !x.IsEmpty).ToList();
 
     public void Initialize(List<InventorySlot> slots)
     {
@@ -52,6 +54,42 @@ namespace Code.UI.InventoryWithSlots
       Debug.LogError("Cant AddItem. Inventory is full");
     }
 
+    public void DecreaseItemQuantity(string id, int quantity, int slotNumberToStartSearch = 0)
+    {
+      for (int slotNumber = slotNumberToStartSearch; slotNumber < OccupiedSlots.Count; slotNumber++)
+      {
+        InventorySlot inventorySlot = OccupiedSlots[slotNumber];
+        if (inventorySlot.ItemId == id)
+        {
+          if (inventorySlot.Quantity <= quantity)
+          {
+            ClearSlot(slotNumber);
+            if (inventorySlot.Quantity < quantity)
+              DecreaseItemQuantity(id, quantity - inventorySlot.Quantity, slotNumber + 1);
+          }
+          else
+            inventorySlot.DecreaseQuantity(quantity);
+
+          return;
+        }
+      }
+    }
+
+    public void ClearRandomSlot()
+    {
+      List<InventorySlot> occupiedSlots = OccupiedSlots;
+      if (occupiedSlots.Count == 0)
+      {
+        Debug.LogError("No items in inventory");
+        return;
+      }
+
+      ClearSlot(Random.Range(0, occupiedSlots.Count));
+    }
+
+    public void ClearSlot(int slotNumber) =>
+      OccupiedSlots[slotNumber].RemoveItem();
+
     private bool SameNotFullItem(InventorySlot slot, InventoryItem item) =>
       !slot.IsEmpty && SameType(slot, item) && !slot.IsFull;
 
@@ -64,6 +102,7 @@ namespace Code.UI.InventoryWithSlots
       slot.IncreaseQuantity(quantityNeededForStack);
       item.DecreaseQuantity(quantityNeededForStack);
     }
+
     private bool SameType(InventorySlot slot, InventoryItem item) =>
       slot.ItemId == item.Id;
   }
