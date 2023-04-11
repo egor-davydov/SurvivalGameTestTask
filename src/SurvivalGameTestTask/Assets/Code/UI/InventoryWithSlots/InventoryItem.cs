@@ -27,7 +27,6 @@ namespace Code.UI.InventoryWithSlots
         QuantityText.text = $"{Quantity}";
       }
     }
-
     
     public void Initialize(ItemStaticData itemStaticData, int quantity)
     {

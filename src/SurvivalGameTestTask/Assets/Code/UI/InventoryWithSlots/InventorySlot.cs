@@ -1,8 +1,9 @@
 using Code.UI.Services;
+using UnityEngine;
 
 namespace Code.UI.InventoryWithSlots
 {
-  public class InventorySlot
+  public class InventorySlot : MonoBehaviour
   {
     public int SlotNumber { get; private set; }
     public string ItemId => InventoryItem.Id;
@@ -13,10 +14,22 @@ namespace Code.UI.InventoryWithSlots
 
     private InventoryItem InventoryItem { get; set; }
 
-    public void AddItem(InventoryItem item)
+    public void Initialize(int slotNumber) => 
+      SlotNumber = slotNumber;
+
+    public void AddItem(InventoryItem inventoryItem)
     {
-      
+      InventoryItem = inventoryItem;
+      InventoryItem.transform.SetParent(transform);
+      InventoryItem.transform.position = transform.position;
     }
+
+    public void RemoveItem()
+    {
+      Destroy(InventoryItem.gameObject);
+      Destroy(InventoryItem);
+    }
+
     public void IncreaseQuantity(int itemQuantity) => 
       InventoryItem.IncreaseQuantity(itemQuantity);
 

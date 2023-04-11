@@ -1,10 +1,11 @@
 using Code.Services;
+using Code.UI.InventoryWithSlots;
 using UnityEngine;
 
 namespace Code.UI.Factories
 {
   public interface ISlotFactory : IService
   {
-    void CreateSlot(Transform parent);
+    InventorySlot CreateSlot(Transform parent);
   }
 }

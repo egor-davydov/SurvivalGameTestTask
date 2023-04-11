@@ -17,6 +17,11 @@ namespace Code.UI.InventoryWithSlots
       set => _slotsParent = value;
     }
 
+    public void Initialize(List<InventorySlot> slots)
+    {
+      _slots = slots;
+    }
+    
     public void AddItem(InventoryItem item)
     {
       foreach (InventorySlot slot in _slots)

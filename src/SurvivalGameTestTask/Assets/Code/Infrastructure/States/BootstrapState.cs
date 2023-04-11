@@ -34,6 +34,7 @@ namespace Code.Infrastructure.States
     {
       RegisterStaticDataService();
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+      _services.RegisterSingle<IItemFactory>(new ItemFactory());
       _services.RegisterSingle<IItemService>(new ItemService(_services.Single<IStaticDataService>(), _services.Single<IItemFactory>()));
       _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>(), _services.Single<IItemService>()));
       _services.RegisterSingle<ISlotFactory>(new SlotFactory(_services.Single<IAssetProvider>()));
