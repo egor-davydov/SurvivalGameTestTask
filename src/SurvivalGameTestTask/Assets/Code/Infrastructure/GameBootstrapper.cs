@@ -10,6 +10,7 @@ namespace Code.Infrastructure
     {
       GameStateMachine stateMachine = new GameStateMachine(new SceneLoader(this), new AllServices());
       stateMachine.Enter<BootstrapState>();
+      DontDestroyOnLoad(this);
     }
   }
 }
