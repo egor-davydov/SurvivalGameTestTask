@@ -1,6 +1,7 @@
 using System;
 using Code.Infrastructure.AssetManagement;
 using Code.Services;
+using Code.Services.StaticData;
 using Code.UI.Factories;
 
 namespace Code.Infrastructure.States
@@ -29,6 +30,7 @@ namespace Code.Infrastructure.States
 
     private void RegisterServices()
     {
+      _services.RegisterSingle<IStaticDataService>(new StaticDataService());
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>()));
       _services.RegisterSingle<ISlotFactory>(new SlotFactory(_services.Single<IAssetProvider>()));
