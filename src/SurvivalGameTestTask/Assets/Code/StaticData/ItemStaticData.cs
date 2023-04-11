@@ -1,7 +1,6 @@
-using Code.StaticData;
 using UnityEngine;
 
-namespace Code.Services.StaticData
+namespace Code.StaticData
 {
   public class ItemStaticData : ScriptableObject
   {

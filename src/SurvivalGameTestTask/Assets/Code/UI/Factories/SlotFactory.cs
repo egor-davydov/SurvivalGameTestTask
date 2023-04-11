@@ -1,4 +1,5 @@
 using Code.Infrastructure.AssetManagement;
+using Code.UI.InventoryWithSlots;
 using UnityEngine;
 
 namespace Code.UI.Factories
@@ -11,10 +12,12 @@ namespace Code.UI.Factories
     {
       _assets = assets;
     }
-    public void CreateSlot(Transform parent)
+    public InventorySlot CreateSlot(Transform parent)
     {
       GameObject slotPrefab = _assets.Load(AssetPath.SlotPath);
       GameObject slotObject = Object.Instantiate(slotPrefab, parent);
+      var inventorySlot = slotObject.GetComponent<InventorySlot>();
+      return inventorySlot;
     }
   }
 }
