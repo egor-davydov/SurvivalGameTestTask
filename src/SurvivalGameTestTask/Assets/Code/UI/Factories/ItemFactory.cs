@@ -1,6 +1,7 @@
+using Code.UI.InventoryWithSlots;
 using UnityEngine;
 
-namespace Code.UI.Services
+namespace Code.UI.Factories
 {
   public class ItemFactory : IItemFactory
   {

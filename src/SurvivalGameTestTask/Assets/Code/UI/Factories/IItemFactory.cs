@@ -1,7 +1,8 @@
 ﻿using Code.Services;
+using Code.UI.InventoryWithSlots;
 using UnityEngine;
 
-namespace Code.UI.Services
+namespace Code.UI.Factories
 {
   public interface IItemFactory : IService
   {

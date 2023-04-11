@@ -25,6 +25,7 @@ namespace Code.UI.Services
     {
       _inventory = inventory;
     }
+
     public void AddRandom(ItemType itemType, int quantity)
     {
       InventoryItem inventoryItem = CreateItem();
@@ -32,7 +33,7 @@ namespace Code.UI.Services
 
       PutInInventory(inventoryItem);
     }
-    
+
     private InventoryItem CreateItem() =>
       _itemFactory.CreateItem(_inventory.SlotsParent);
 
@@ -44,6 +45,5 @@ namespace Code.UI.Services
       List<ItemStaticData> itemsOfType = _staticData.ForItemsOfCertainType(itemType);
       return itemsOfType[Random.Range(0, itemsOfType.Count)];
     }
-
   }
 }
