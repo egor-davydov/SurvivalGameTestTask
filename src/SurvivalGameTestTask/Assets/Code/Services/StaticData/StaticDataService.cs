@@ -24,8 +24,6 @@ namespace Code.Services.StaticData
       _items = Resources
         .LoadAll<ItemStaticData>(ItemStaticDataPath)
         .ToDictionary(x => x.Id, x => x);
-
-      
     }
 
     public ItemStaticData ForItem(string id)
@@ -44,6 +42,17 @@ namespace Code.Services.StaticData
         : throw new ApplicationException(
           $"No {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name}. " +
           $"Add necessary {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name} to Resources/{InventoryStaticDataPath}");
+    }
+
+    public List<ItemStaticData> ForItemsOfCertainType(ItemType itemType)
+    {
+      List<ItemStaticData> itemsOfType = _items.Values.Where(x => x.ItemType == itemType).ToList();
+      if (itemsOfType.Count == 0)
+        throw new ApplicationException(
+          $"No {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name} for {itemType}. " +
+          $"Add necessary {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType} to Resources/{ItemStaticDataPath}");
+
+      return itemsOfType;
     }
   }
 }

@@ -1,3 +1,4 @@
+using Code.UI.Services;
 using UnityEngine;
 
 namespace Code.UI.InventoryWithSlots
@@ -11,6 +12,11 @@ namespace Code.UI.InventoryWithSlots
     {
       get => _slotsParent;
       set => _slotsParent = value;
+    }
+
+    public void AddItem(InventoryItem inventoryItem)
+    {
+      
     }
   }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Code.StaticData;
 
 namespace Code.Services.StaticData
@@ -6,5 +7,6 @@ namespace Code.Services.StaticData
   {
     void Load();
     InventoryStaticData ForInventory();
+    List<ItemStaticData> ForItemsOfCertainType(ItemType itemType);
   }
 }
