@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Code.Services;
+using Code.UI.Factories;
 
 namespace Code.Infrastructure.States
 {
@@ -9,12 +11,13 @@ namespace Code.Infrastructure.States
 
     private IExitableState _currentState;
 
-    public GameStateMachine(SceneLoader sceneLoader)
+    public GameStateMachine(SceneLoader sceneLoader, AllServices services)
     {
       _states = new Dictionary<Type, IExitableState>
       {
-        [typeof(BootstrapState)] = new BootstrapState(this),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
+        [typeof(BootstrapState)] = new BootstrapState(this, services),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IHudFactory>(),
+          services.Single<IInventoryFactory>(), services.Single<ISlotFactory>()),
       };
     }
 
