@@ -9,5 +9,6 @@ namespace Code.Services.StaticData
     InventoryStaticData ForInventory();
     List<ItemStaticData> ForItemsOfCertainType(ItemType itemType);
     ItemStaticData ForItem(string id);
+    LockedSlotStaticData ForLockedSlot();
   }
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Helmet
   m_EditorClassIdentifier: 
   Id: helmet
-  Weight: 10
-  MaxQuantityInStack: 10
+  Weight: 1
+  MaxQuantityInStack: 5
   Icon: {fileID: 21300000, guid: 3e6fbe495c3fc7d4c8f597381e3f97e5, type: 3}
   ItemType: 0
   ProtectionType: 0
-  Protection: 0
+  Protection: 10

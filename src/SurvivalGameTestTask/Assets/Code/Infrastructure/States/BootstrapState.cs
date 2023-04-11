@@ -25,7 +25,7 @@ namespace Code.Infrastructure.States
 
     public void Enter()
     {
-      _stateMachine.Enter<LoadLevelState, string>("Main");
+      _stateMachine.Enter<LoadProgressState>();
     }
 
     public void Exit()

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d284d0f3ab4230b1ef02b8c59b3005, type: 3}
   m_Name: Ak47
   m_EditorClassIdentifier: 
-  Id: 
-  Weight: 0
-  MaxQuantityInStack: 0
-  Icon: {fileID: 0}
+  Id: ak47
+  Weight: 5
+  MaxQuantityInStack: 3
+  Icon: {fileID: 21300000, guid: 9ea9dcde7d40e7e41b0837a827e43c24, type: 3}
   ItemType: 0
-  WeaponType: 0
-  ConsumableAmmo: 0
-  Damage: 0
+  WeaponType: 1
+  ConsumableAmmo: 1
+  Damage: 20

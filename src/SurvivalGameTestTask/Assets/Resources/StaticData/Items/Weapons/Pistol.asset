@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d284d0f3ab4230b1ef02b8c59b3005, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  Id: 
-  Weight: 0
-  MaxQuantityInStack: 0
-  Icon: {fileID: 0}
+  Id: pistol
+  Weight: 1
+  MaxQuantityInStack: 3
+  Icon: {fileID: 21300000, guid: 1edb7cba89c0789499253a397afbbfe5, type: 3}
   ItemType: 0
   WeaponType: 0
   ConsumableAmmo: 0
-  Damage: 0
+  Damage: 10

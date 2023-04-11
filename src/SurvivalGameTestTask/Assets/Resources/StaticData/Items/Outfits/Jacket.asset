@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Jacket
   m_EditorClassIdentifier: 
   Id: jacket
-  Weight: 0
-  MaxQuantityInStack: 0
+  Weight: 1
+  MaxQuantityInStack: 5
   Icon: {fileID: 21300000, guid: 60ab1fe566e694c42b9e66a911ee9eae, type: 3}
   ItemType: 3
   ProtectionType: 1
-  Protection: 10
+  Protection: 3
