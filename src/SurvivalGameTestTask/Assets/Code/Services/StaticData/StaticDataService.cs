@@ -9,16 +9,19 @@ namespace Code.Services.StaticData
 {
   public class StaticDataService : IStaticDataService
   {
+    private const string LockedSlotStaticDataPath = "StaticData/LockedSlot/LockedSlotStaticData";
     private const string InventoryStaticDataPath = "StaticData/Inventory/InventoryStaticData";
     private const string ItemStaticDataPath = "StaticData/Items";
 
     private InventoryStaticData _inventory;
     private Dictionary<string, ItemStaticData> _items;
+    private LockedSlotStaticData _lockedSlot;
 
 
     public void Load()
     {
-      
+      _lockedSlot = Resources
+        .Load<LockedSlotStaticData>(LockedSlotStaticDataPath);
       _inventory = Resources
         .Load<InventoryStaticData>(InventoryStaticDataPath);
       _items = Resources
@@ -39,6 +42,15 @@ namespace Code.Services.StaticData
     {
       return _inventory != null
         ? _inventory
+        : throw new ApplicationException(
+          $"No {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name}. " +
+          $"Add necessary {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name} to Resources/{InventoryStaticDataPath}");
+    }
+    
+    public LockedSlotStaticData ForLockedSlot()
+    {
+      return _lockedSlot != null
+        ? _lockedSlot
         : throw new ApplicationException(
           $"No {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name}. " +
           $"Add necessary {((MethodInfo)MethodInfo.GetCurrentMethod()).ReturnType.Name} to Resources/{InventoryStaticDataPath}");

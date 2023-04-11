@@ -1,4 +1,3 @@
-using Code.UI.Services;
 using UnityEngine;
 
 namespace Code.UI.InventoryWithSlots
@@ -14,7 +13,7 @@ namespace Code.UI.InventoryWithSlots
 
     private InventoryItem InventoryItem { get; set; }
 
-    public void Initialize(int slotNumber) => 
+    public void Initialize(int slotNumber) =>
       SlotNumber = slotNumber;
 
     public void AddItem(InventoryItem inventoryItem)
@@ -30,10 +29,18 @@ namespace Code.UI.InventoryWithSlots
       Destroy(InventoryItem);
     }
 
-    public void IncreaseQuantity(int itemQuantity) => 
+    public void IncreaseQuantity(int itemQuantity) =>
       InventoryItem.IncreaseQuantity(itemQuantity);
 
-    public void DecreaseQuantity(int itemQuantity) => 
+    public void DecreaseQuantity(int itemQuantity) =>
       InventoryItem.DecreaseQuantity(itemQuantity);
+
+    public int QuantityOf(string id)
+    {
+      if (id == ItemId)
+        return Quantity;
+
+      return 0;
+    }
   }
 }

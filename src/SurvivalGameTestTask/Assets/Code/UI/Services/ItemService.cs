@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Code.Services.SaveLoad;
 using Code.Services.StaticData;
 using Code.StaticData;
 using Code.UI.Factories;
@@ -10,14 +11,16 @@ namespace Code.UI.Services
   public class ItemService : IItemService
   {
     private readonly IItemFactory _itemFactory;
+    private readonly ISaveLoadService _saveLoadService;
     private readonly IStaticDataService _staticData;
 
     private Inventory _inventory;
 
-    public ItemService(IStaticDataService staticData, IItemFactory itemFactory)
+    public ItemService(IStaticDataService staticData, IItemFactory itemFactory, ISaveLoadService saveLoadService)
     {
       _staticData = staticData;
       _itemFactory = itemFactory;
+      _saveLoadService = saveLoadService;
     }
 
     public void Initialize(Inventory inventory)
@@ -35,16 +38,21 @@ namespace Code.UI.Services
 
         PutInInventory(inventoryItem);
       }
+
+      _saveLoadService.SaveProgress();
     }
 
-    public void ClearRandomSlot() => 
+    public void ClearRandomSlot()
+    {
       _inventory.ClearRandomSlot();
+      _saveLoadService.SaveProgress();
+    }
 
     public void DecreaseRandomItem(ItemType itemType, int quantity)
     {
       ItemStaticData randomItemOfCertainType = RandomItemOfCertainType(itemType);
       _inventory.DecreaseItemQuantity(randomItemOfCertainType.Id, quantity);
-
+      _saveLoadService.SaveProgress();
     }
 
     public void AddRandom(ItemType itemType, int quantity)
@@ -53,6 +61,7 @@ namespace Code.UI.Services
       inventoryItem.Initialize(RandomItemOfCertainType(itemType), quantity);
 
       PutInInventory(inventoryItem);
+      _saveLoadService.SaveProgress();
     }
 
     private InventoryItem CreateItem() =>

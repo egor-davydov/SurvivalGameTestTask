@@ -1,5 +1,4 @@
-﻿using Code.Services.StaticData;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.StaticData
 {
@@ -8,6 +7,8 @@ namespace Code.StaticData
   {
     public WeaponType WeaponType;
     public BulletType ConsumableAmmo;
+
+    [Range(1, 100)]
     public int Damage;
   }
 }

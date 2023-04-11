@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Code.Services;
+using Code.Services.PersistentProgress;
+using Code.Services.ProgressWatchers;
+using Code.Services.SaveLoad;
 using Code.Services.StaticData;
 using Code.UI.Factories;
 using Code.UI.Services;
@@ -18,7 +21,9 @@ namespace Code.Infrastructure.States
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IStaticDataService>(), services.Single<IItemService>(), services.Single<IHudFactory>(),
+        [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IStaticDataService>(), services.Single<IPersistentProgressService>(),
+          services.Single<IProgressWatchersService>(), services.Single<IItemService>(), services.Single<ISlotService>(), services.Single<IHudFactory>(),
           services.Single<IInventoryFactory>(), services.Single<ISlotFactory>()),
       };
     }

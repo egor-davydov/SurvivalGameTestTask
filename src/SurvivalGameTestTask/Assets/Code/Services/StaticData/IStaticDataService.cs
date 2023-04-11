@@ -8,5 +8,7 @@ namespace Code.Services.StaticData
     void Load();
     InventoryStaticData ForInventory();
     List<ItemStaticData> ForItemsOfCertainType(ItemType itemType);
+    ItemStaticData ForItem(string id);
+    LockedSlotStaticData ForLockedSlot();
   }
 }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d433560ff6dd4e00a9fbbdceba89e6aa, type: 3}
   m_Name: InventoryStaticData
   m_EditorClassIdentifier: 
-  SlotsQuantity: 30
+  UnlockedSlotsQuantity: 15
   LockedSlotsQuantity: 15

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Code.UI.Services;
 
 namespace Code.Services
 {
@@ -8,10 +7,10 @@ namespace Code.Services
   {
     private readonly Dictionary<Type, IService> _services;
 
-    public AllServices() => 
+    public AllServices() =>
       _services = new Dictionary<Type, IService>();
 
-    public void RegisterSingle<TService>(TService service) where TService : IService => 
+    public void RegisterSingle<TService>(TService service) where TService : IService =>
       _services.Add(typeof(TService), service);
 
     public TService Single<TService>() where TService : IService
