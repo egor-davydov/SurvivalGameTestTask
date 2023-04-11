@@ -9,12 +9,12 @@ namespace Code.Infrastructure.States
 
     private IExitableState _currentState;
 
-    public GameStateMachine()
+    public GameStateMachine(SceneLoader sceneLoader)
     {
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this),
-        [typeof(LoadLevelState)] = new LoadLevelState(this),
+        [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
       };
     }
 
