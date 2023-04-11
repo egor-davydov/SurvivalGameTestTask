@@ -30,11 +30,18 @@ namespace Code.Infrastructure.States
 
     private void RegisterServices()
     {
-      _services.RegisterSingle<IStaticDataService>(new StaticDataService());
+      RegisterStaticDataService();
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>()));
       _services.RegisterSingle<ISlotFactory>(new SlotFactory(_services.Single<IAssetProvider>()));
       _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(_services.Single<IAssetProvider>()));
+    }
+
+    private void RegisterStaticDataService()
+    {
+      var staticDataService = new StaticDataService();
+      staticDataService.Load();
+      _services.RegisterSingle<IStaticDataService>(staticDataService);
     }
   }
 }
