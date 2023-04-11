@@ -6,6 +6,8 @@ namespace Code.StaticData
   public class LockedSlotStaticData : ScriptableObject
   {
     public string PriceItemId;
+
+    [Range(1, 60)]
     public int Price;
   }
 }

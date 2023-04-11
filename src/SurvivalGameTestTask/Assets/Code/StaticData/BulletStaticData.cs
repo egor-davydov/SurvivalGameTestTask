@@ -1,5 +1,4 @@
-﻿using Code.Services.StaticData;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.StaticData
 {

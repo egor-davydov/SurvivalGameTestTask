@@ -38,6 +38,7 @@ namespace Code.UI.Services
 
         PutInInventory(inventoryItem);
       }
+
       _saveLoadService.SaveProgress();
     }
 

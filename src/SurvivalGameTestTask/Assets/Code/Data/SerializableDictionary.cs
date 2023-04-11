@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 namespace Code.Data
 {
   [Serializable]
@@ -9,8 +10,11 @@ namespace Code.Data
   {
     public Dictionary<TKey, TValue> Dictionary = new();
 
-    [SerializeField] private TKey[] _keys;
-    [SerializeField] private TValue[] _values;
+    [SerializeField]
+    private TKey[] _keys;
+
+    [SerializeField]
+    private TValue[] _values;
 
     public void OnBeforeSerialize()
     {
@@ -23,4 +27,5 @@ namespace Code.Data
       for (int i = 0; i < _keys.Length; i++)
         Dictionary.Add(_keys[i], _values[i]);
     }
-  }}
+  }
+}

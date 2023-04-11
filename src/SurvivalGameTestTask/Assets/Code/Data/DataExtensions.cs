@@ -9,6 +9,5 @@ namespace Code.Data
 
     public static T FromJson<T>(this string json) =>
       JsonUtility.FromJson<T>(json);
-
   }
 }

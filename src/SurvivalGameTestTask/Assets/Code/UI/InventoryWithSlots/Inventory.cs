@@ -4,7 +4,6 @@ using Code.Data;
 using Code.Services.ProgressWatchers;
 using Code.Services.StaticData;
 using Code.UI.Factories;
-using Code.UI.Services;
 using UnityEngine;
 
 namespace Code.UI.InventoryWithSlots
@@ -18,6 +17,7 @@ namespace Code.UI.InventoryWithSlots
     private InventoryData _progressInventoryData;
     private IItemFactory _itemFactory;
     private IStaticDataService _staticData;
+    private Queue<LockedSlot> _lockedSlots;
 
     public Transform SlotsParent
     {
@@ -33,8 +33,9 @@ namespace Code.UI.InventoryWithSlots
       _staticData = staticData;
     }
 
-    public void Initialize(List<InventorySlot> slots)
+    public void Initialize(List<InventorySlot> slots, Queue<LockedSlot> lockedSlots)
     {
+      _lockedSlots = lockedSlots;
       _slots = slots;
     }
 
@@ -55,6 +56,9 @@ namespace Code.UI.InventoryWithSlots
       foreach (int occupiedSlotNumber in progressInventoryData.OccupiedSlots.Dictionary.Keys.Where(slotNumber => _slots[slotNumber].IsEmpty).ToList())
         progressInventoryData.Remove(occupiedSlotNumber);
     }
+    
+    public void MakeNextSlotUnlockable() =>
+      _lockedSlots.Dequeue().MakeUnlockable();
 
     public void AddItem(InventoryItem item)
     {
@@ -86,6 +90,10 @@ namespace Code.UI.InventoryWithSlots
       Debug.LogError("Cant AddItem. Inventory is full");
     }
 
+    public void AddSlot(InventorySlot inventorySlot) =>
+      _slots.Add(inventorySlot);
+
+    
     public void DecreaseItemQuantity(string id, int quantity, int slotNumberToStartSearch = 0)
     {
       for (int slotNumber = slotNumberToStartSearch; slotNumber < OccupiedSlots.Count; slotNumber++)
@@ -148,5 +156,8 @@ namespace Code.UI.InventoryWithSlots
 
     private bool SameType(InventorySlot slot, InventoryItem item) =>
       slot.ItemId == item.Id;
+    
+    public int QuantityOf(string id) =>
+      OccupiedSlots.Sum(x => x.QuantityOf(id));
   }
 }

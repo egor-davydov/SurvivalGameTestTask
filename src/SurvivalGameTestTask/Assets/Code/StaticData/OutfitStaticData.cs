@@ -1,5 +1,4 @@
-﻿using Code.Services.StaticData;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Code.StaticData
 {
@@ -7,6 +6,8 @@ namespace Code.StaticData
   class OutfitStaticData : ItemStaticData
   {
     public ProtectionType ProtectionType;
+
+    [Range(1, 100)]
     public int Protection;
   }
 }

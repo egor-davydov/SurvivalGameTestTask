@@ -20,7 +20,7 @@ namespace Code.Data
         occupiedSlotData.ChangeData(itemData);
     }
 
-    public void Remove(int slotNumber) => 
+    public void Remove(int slotNumber) =>
       OccupiedSlots.Dictionary.Remove(slotNumber);
   }
 }
