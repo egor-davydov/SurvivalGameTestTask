@@ -8,10 +8,10 @@ namespace Code.Services.SaveLoad
 {
   public class SaveLoadService : ISaveLoadService
   {
-    private readonly ProgressWatchersService _progressWatchers;
-    private readonly PersistentProgressService _progressService;
+    private readonly IProgressWatchersService _progressWatchers;
+    private readonly IPersistentProgressService _progressService;
 
-    public SaveLoadService(ProgressWatchersService progressWatchers, PersistentProgressService progressService)
+    public SaveLoadService(IProgressWatchersService progressWatchers, IPersistentProgressService progressService)
     {
       _progressWatchers = progressWatchers;
       _progressService = progressService;

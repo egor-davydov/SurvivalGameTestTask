@@ -36,15 +36,15 @@ namespace Code.Infrastructure.States
     private void RegisterServices()
     {
       RegisterStaticDataService();
+      _services.RegisterSingle<IAssetProvider>(new AssetProvider());
       _services.RegisterSingle<IProgressWatchersService>(new ProgressWatchersService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
-      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<ProgressWatchersService>(), _services.Single<PersistentProgressService>()));
-      _services.RegisterSingle<IAssetProvider>(new AssetProvider());
-      _services.RegisterSingle<IItemFactory>(new ItemFactory());
-      _services.RegisterSingle<IItemService>(new ItemService(_services.Single<IStaticDataService>(), _services.Single<IItemFactory>()));
-      _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>(), _services.Single<IItemService>()));
-      _services.RegisterSingle<ISlotFactory>(new SlotFactory(_services.Single<IAssetProvider>()));
-      _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(_services.Single<IAssetProvider>()));
+      _services.RegisterSingle<IItemFactory>(new ItemFactory(_services.Single<IProgressWatchersService>()));
+      _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IProgressWatchersService>(), _services.Single<IPersistentProgressService>()));
+      _services.RegisterSingle<IItemService>(new ItemService(_services.Single<IStaticDataService>(), _services.Single<IItemFactory>(), _services.Single<ISaveLoadService>()));
+      _services.RegisterSingle<IHudFactory>(new HudFactory(_services.Single<IAssetProvider>(), _services.Single<IItemService>(), _services.Single<IProgressWatchersService>()));
+      _services.RegisterSingle<ISlotFactory>(new SlotFactory(_services.Single<IAssetProvider>(), _services.Single<IProgressWatchersService>()));
+      _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(_services.Single<IAssetProvider>(), _services.Single<IProgressWatchersService>()));
     }
 
     private void RegisterStaticDataService()

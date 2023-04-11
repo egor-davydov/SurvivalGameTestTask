@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Code.Services.PersistentProgress;
+using Code.Services.ProgressWatchers;
 using Code.Services.StaticData;
 using Code.StaticData;
 using Code.UI.Factories;
@@ -14,6 +16,8 @@ namespace Code.Infrastructure.States
     private readonly GameStateMachine _stateMachine;
     private readonly SceneLoader _sceneLoader;
     private readonly IStaticDataService _staticData;
+    private readonly IPersistentProgressService _progressService;
+    private readonly IProgressWatchersService _progressWatchers;
     private readonly IItemService _itemService;
     private readonly IHudFactory _hudFactory;
     private readonly IInventoryFactory _inventoryFactory;
@@ -23,6 +27,8 @@ namespace Code.Infrastructure.States
       GameStateMachine stateMachine,
       SceneLoader sceneLoader,
       IStaticDataService staticData,
+      IPersistentProgressService progressService,
+      IProgressWatchersService progressWatchers,
       IItemService itemService,
       IHudFactory hudFactory,
       IInventoryFactory inventoryFactory,
@@ -32,6 +38,8 @@ namespace Code.Infrastructure.States
       _stateMachine = stateMachine;
       _sceneLoader = sceneLoader;
       _staticData = staticData;
+      _progressService = progressService;
+      _progressWatchers = progressWatchers;
       _itemService = itemService;
       _hudFactory = hudFactory;
       _inventoryFactory = inventoryFactory;
@@ -46,6 +54,7 @@ namespace Code.Infrastructure.States
     private void OnLevelLoaded()
     {
       InitializeLevel();
+      InformProgressReaders();
     }
 
     private void InitializeLevel()
@@ -53,6 +62,11 @@ namespace Code.Infrastructure.States
       GameObject hud = InitializeHud();
       Inventory inventory = InitializeInventory(hud);
       InitializeSlots(inventory);
+    }
+    private void InformProgressReaders()
+    {
+      foreach (IProgressReader progressReader in _progressWatchers.Readers) 
+        progressReader.ReceiveProgress(_progressService.Progress);
     }
 
     private void InitializeSlots(Inventory inventory)
