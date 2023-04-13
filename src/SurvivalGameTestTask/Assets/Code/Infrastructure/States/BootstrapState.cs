@@ -58,7 +58,6 @@ namespace Code.Infrastructure.States
       _services.RegisterSingle<ISlotService>(new SlotService(
         _services.Single<IStaticDataService>(),
         _services.Single<ISlotFactory>(),
-        _services.Single<IPersistentProgressService>(),
         _services.Single<ISaveLoadService>()
       ));
       _services.Single<ISlotFactory>().Initialize(_services.Single<ISlotService>());
