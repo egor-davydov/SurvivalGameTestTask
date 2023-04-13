@@ -16,11 +16,8 @@ namespace Code.Data
 
     public void IncreaseQuantity(int quantity) =>
       Quantity += quantity;
-
-    public void ChangeData(ItemData itemData)
-    {
-      Id = itemData.Id;
-      Quantity = itemData.Quantity;
-    }
+    
+    public void DecreaseQuantity(int quantity) => 
+      Quantity -= quantity;
   }
 }

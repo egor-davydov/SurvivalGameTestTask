@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: ak47bullet
   Weight: 0.01
-  MaxQuantityInStack: 10
+  MaxQuantityInStack: 47
   Icon: {fileID: 21300000, guid: cb50a6325188b8d4aafe5d032ce8f97c, type: 3}
   ItemType: 1
   BulletType: 1

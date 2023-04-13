@@ -9,7 +9,7 @@ namespace Code.StaticData
     [Range(0.01f, 50)]
     public float Weight;
 
-    [Range(1, 20)]
+    [Range(1, 100)]
     public int MaxQuantityInStack;
 
     public Sprite Icon;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: pistolbullet
   Weight: 0.01
-  MaxQuantityInStack: 30
+  MaxQuantityInStack: 26
   Icon: {fileID: 21300000, guid: f793aa508c46aa34fa5ba397d05982da, type: 3}
   ItemType: 1
   BulletType: 0
