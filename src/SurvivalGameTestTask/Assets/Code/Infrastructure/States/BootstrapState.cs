@@ -44,8 +44,7 @@ namespace Code.Infrastructure.States
       _services.RegisterSingle<IItemService>(new ItemService(
         _services.Single<IStaticDataService>(),
         _services.Single<IItemFactory>(),
-        _services.Single<ISaveLoadService>()
-      ));
+        _services.Single<ISaveLoadService>(), TODO));
       _services.RegisterSingle<IHudFactory>(new HudFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IItemService>(),

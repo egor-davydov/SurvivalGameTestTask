@@ -20,7 +20,21 @@ namespace Code.Data
         OccupiedSlots.Dictionary.Add(slotNumber, itemData);
       else
         occupiedSlotData.IncreaseQuantity(itemData.Quantity);
-      
+
+      Changed?.Invoke();
+    }
+
+    public void IncreaseQuantity(int slotNumber, int quantity)
+    {
+      OccupiedSlots.Dictionary.TryGetValue(slotNumber, out ItemData data);
+      data.IncreaseQuantity(quantity);
+      Changed?.Invoke();
+    }
+
+    public void DecreaseQuantity(int slotNumber, int quantity)
+    {
+      OccupiedSlots.Dictionary.TryGetValue(slotNumber, out ItemData data);
+      data.DecreaseQuantity(quantity);
       Changed?.Invoke();
     }
 
@@ -28,6 +42,5 @@ namespace Code.Data
     {
       OccupiedSlots.Dictionary.Remove(slotNumber);
       Changed?.Invoke();
-    }
-  }
+    }  }
 }

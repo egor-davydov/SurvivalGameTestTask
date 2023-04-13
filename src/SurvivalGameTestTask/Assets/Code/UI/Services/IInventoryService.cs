@@ -13,5 +13,6 @@ namespace Code.UI.Services
     void RemoveItem(int slotNumber);
     void DecreaseItemQuantity(ItemData itemData);
     int QuantityOf(string id);
+    int OccupiedSlotsCount { get; }
   }
 }
