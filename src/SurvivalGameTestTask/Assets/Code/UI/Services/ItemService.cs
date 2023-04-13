@@ -31,8 +31,8 @@ namespace Code.UI.Services
 
     public void AddStacksOf(ItemType itemType)
     {
-      ItemStaticData randomItemData = RandomItemOfCertainType(itemType);
-      PutInInventory(new ItemData(randomItemData.Id, randomItemData.MaxQuantityInStack));
+      foreach (ItemStaticData itemStaticData in _staticData.ForItemsOfCertainType(itemType))
+        PutInInventory(new ItemData(itemStaticData.Id, itemStaticData.MaxQuantityInStack));
     }
 
     public void ClearRandomSlot()
@@ -43,7 +43,7 @@ namespace Code.UI.Services
         Debug.LogError("No items in inventory");
         return;
       }
-
+      
       _inventoryService.RemoveItem(Random.Range(0, occupiedSlotsCount));
     }
 

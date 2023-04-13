@@ -29,7 +29,7 @@ namespace Code.UI.Services
       _inventoryService.DecreaseItemQuantity(new ItemData(lockedSlotStaticData.PriceItemId, lockedSlotStaticData.Price));
       _inventoryService.AddSlot(siblingIndex);
       _inventoryService.MakeNextSlotUnlockable();
-      _progressService.Progress.InventoryData.UnlockedSlotsQuantity++;
+      _progressService.Progress.InventoryData.AddUnlockedSlot();
 
       return true;
     }

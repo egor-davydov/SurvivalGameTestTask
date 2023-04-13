@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Code.Data
 {
@@ -24,6 +25,12 @@ namespace Code.Data
       Changed?.Invoke();
     }
 
+    public void AddUnlockedSlot()
+    {
+      UnlockedSlotsQuantity++;
+      Changed?.Invoke();
+    }
+
     public void IncreaseQuantity(int slotNumber, int quantity)
     {
       OccupiedSlots.Dictionary.TryGetValue(slotNumber, out ItemData data);
@@ -42,5 +49,6 @@ namespace Code.Data
     {
       OccupiedSlots.Dictionary.Remove(slotNumber);
       Changed?.Invoke();
-    }  }
+    }
+  }
 }

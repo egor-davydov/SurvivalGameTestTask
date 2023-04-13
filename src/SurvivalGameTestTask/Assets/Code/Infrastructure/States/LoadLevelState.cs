@@ -17,8 +17,7 @@ namespace Code.Infrastructure.States
     private readonly IStaticDataService _staticData;
     private readonly IPersistentProgressService _progressService;
     private readonly IProgressWatchersService _progressWatchers;
-    private readonly IItemService _itemService;
-    private readonly ISlotService _slotService;
+    private readonly IInventoryService _inventoryService;
     private readonly IHudFactory _hudFactory;
     private readonly IInventoryFactory _inventoryFactory;
     private readonly ISlotFactory _slotFactory;
@@ -29,8 +28,7 @@ namespace Code.Infrastructure.States
       IStaticDataService staticData,
       IPersistentProgressService progressService,
       IProgressWatchersService progressWatchers,
-      IItemService itemService,
-      ISlotService slotService,
+      IInventoryService inventoryService,
       IHudFactory hudFactory,
       IInventoryFactory inventoryFactory,
       ISlotFactory slotFactory
@@ -41,8 +39,7 @@ namespace Code.Infrastructure.States
       _staticData = staticData;
       _progressService = progressService;
       _progressWatchers = progressWatchers;
-      _itemService = itemService;
-      _slotService = slotService;
+      _inventoryService = inventoryService;
       _hudFactory = hudFactory;
       _inventoryFactory = inventoryFactory;
       _slotFactory = slotFactory;
@@ -78,8 +75,8 @@ namespace Code.Infrastructure.States
     private Inventory InitializeInventory(GameObject hud)
     {
       Inventory inventory = _inventoryFactory.CreateInventory(hud.transform);
-      _itemService.Initialize(inventory);
-      _slotService.Initialize(inventory);
+      _inventoryService.Initialize(inventory);
+      
       return inventory;
     }
 

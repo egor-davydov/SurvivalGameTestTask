@@ -41,32 +41,39 @@ namespace Code.Infrastructure.States
         _services.Single<IProgressWatchersService>(),
         _services.Single<IPersistentProgressService>()
       ));
-      _services.RegisterSingle<IItemService>(new ItemService(
-        _services.Single<IStaticDataService>(),
-        _services.Single<IItemFactory>(),
-        _services.Single<ISaveLoadService>(), TODO));
-      _services.RegisterSingle<IHudFactory>(new HudFactory(
-        _services.Single<IAssetProvider>(),
-        _services.Single<IItemService>(),
-        _services.Single<IProgressWatchersService>()
-      ));
       _services.RegisterSingle<ISlotFactory>(new SlotFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchersService>(),
         _services.Single<IStaticDataService>()
       ));
+      _services.RegisterSingle<IInventoryService>(new InventoryService(
+        _services.Single<IPersistentProgressService>(),
+        _services.Single<ISlotFactory>()
+      ));
+      _services.RegisterSingle<IItemService>(new ItemService(
+        _services.Single<IStaticDataService>(),
+        _services.Single<IItemFactory>(),
+        _services.Single<ISaveLoadService>(), 
+        _services.Single<IInventoryService>() 
+      ));
       _services.RegisterSingle<ISlotService>(new SlotService(
         _services.Single<IStaticDataService>(),
-        _services.Single<ISlotFactory>(),
-        _services.Single<ISaveLoadService>()
+        _services.Single<IPersistentProgressService>(),
+        _services.Single<IInventoryService>()
+      ));
+      _services.RegisterSingle<IHudFactory>(new HudFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IItemService>(),
+        _services.Single<IProgressWatchersService>()
       ));
       _services.Single<ISlotFactory>().Initialize(_services.Single<ISlotService>());
       _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchersService>(),
         _services.Single<IStaticDataService>(),
-        _services.Single<IItemFactory>()
-      ));
+        _services.Single<IItemFactory>(),
+        _services.Single<ISaveLoadService>()
+        ));
     }
 
     private void RegisterStaticDataService()
