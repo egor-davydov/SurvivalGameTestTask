@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Code.Services.SaveLoad;
+using Code.Data;
+using Code.Services.Randomizer;
 using Code.Services.StaticData;
 using Code.StaticData;
-using Code.UI.Factories;
 using Code.UI.InventoryWithSlots;
 using UnityEngine;
 
@@ -10,70 +10,52 @@ namespace Code.UI.Services
 {
   public class ItemService : IItemService
   {
-    private readonly IItemFactory _itemFactory;
-    private readonly ISaveLoadService _saveLoadService;
+    private readonly IInventoryService _inventoryService;
     private readonly IStaticDataService _staticData;
+    private readonly IRandomService _randomService;
 
     private Inventory _inventory;
 
-    public ItemService(IStaticDataService staticData, IItemFactory itemFactory, ISaveLoadService saveLoadService)
+    public ItemService(IStaticDataService staticData, IInventoryService inventoryService, IRandomService randomService)
     {
+      _randomService = randomService;
       _staticData = staticData;
-      _itemFactory = itemFactory;
-      _saveLoadService = saveLoadService;
+      _inventoryService = inventoryService;
     }
-
-    public void Initialize(Inventory inventory)
-    {
-      _inventory = inventory;
-    }
+    
+    public void AddRandom(ItemType itemType, int quantity) =>
+      PutInInventory(new ItemData(RandomItemOfCertainType(itemType).Id, quantity));
 
     public void AddStacksOf(ItemType itemType)
     {
-      List<ItemStaticData> itemsOfCertainType = _staticData.ForItemsOfCertainType(itemType);
-      foreach (ItemStaticData itemStaticData in itemsOfCertainType)
-      {
-        InventoryItem inventoryItem = CreateItem();
-        inventoryItem.Initialize(itemStaticData, itemStaticData.MaxQuantityInStack);
-
-        PutInInventory(inventoryItem);
-      }
-
-      _saveLoadService.SaveProgress();
+      foreach (ItemStaticData itemStaticData in _staticData.ForItemsOfCertainType(itemType))
+        PutInInventory(new ItemData(itemStaticData.Id, itemStaticData.MaxQuantityInStack));
     }
 
     public void ClearRandomSlot()
     {
-      _inventory.ClearRandomSlot();
-      _saveLoadService.SaveProgress();
+      if (_inventoryService.OccupiedSlots.Count == 0)
+      {
+        Debug.LogError("No items in inventory");
+        return;
+      }
+
+      int randomSlotNumber = _inventoryService.OccupiedSlots[_randomService.Next(0, _inventoryService.OccupiedSlots.Count)].Key;
+      _inventoryService.RemoveItem(randomSlotNumber);
     }
 
     public void DecreaseRandomItem(ItemType itemType, int quantity)
     {
       ItemStaticData randomItemOfCertainType = RandomItemOfCertainType(itemType);
-      _inventory.DecreaseItemQuantity(randomItemOfCertainType.Id, quantity);
-      _saveLoadService.SaveProgress();
+      _inventoryService.DecreaseItemQuantity(new ItemData(randomItemOfCertainType.Id, quantity));
     }
 
-    public void AddRandom(ItemType itemType, int quantity)
-    {
-      InventoryItem inventoryItem = CreateItem();
-      inventoryItem.Initialize(RandomItemOfCertainType(itemType), quantity);
-
-      PutInInventory(inventoryItem);
-      _saveLoadService.SaveProgress();
-    }
-
-    private InventoryItem CreateItem() =>
-      _itemFactory.CreateItem(_inventory.SlotsParent);
-
-    private void PutInInventory(InventoryItem inventoryItem) =>
-      _inventory.AddItem(inventoryItem);
+    private void PutInInventory(ItemData inventoryItem) =>
+      _inventoryService.AddItem(inventoryItem);
 
     private ItemStaticData RandomItemOfCertainType(ItemType itemType)
     {
       List<ItemStaticData> itemsOfType = _staticData.ForItemsOfCertainType(itemType);
-      return itemsOfType[Random.Range(0, itemsOfType.Count)];
-    }
-  }
+      return itemsOfType[_randomService.Next(0, itemsOfType.Count)];
+    }  }
 }

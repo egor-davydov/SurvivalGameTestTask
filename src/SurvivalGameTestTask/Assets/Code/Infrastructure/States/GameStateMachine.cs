@@ -23,7 +23,7 @@ namespace Code.Infrastructure.States
         [typeof(BootstrapState)] = new BootstrapState(this, services),
         [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>()),
         [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, services.Single<IStaticDataService>(), services.Single<IPersistentProgressService>(),
-          services.Single<IProgressWatchersService>(), services.Single<IItemService>(), services.Single<ISlotService>(), services.Single<IHudFactory>(),
+          services.Single<IProgressWatchersService>(), services.Single<IInventoryService>(), services.Single<IHudFactory>(),
           services.Single<IInventoryFactory>(), services.Single<ISlotFactory>()),
       };
     }

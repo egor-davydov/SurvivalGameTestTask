@@ -2,6 +2,7 @@ using Code.Infrastructure.AssetManagement;
 using Code.Services;
 using Code.Services.PersistentProgress;
 using Code.Services.ProgressWatchers;
+using Code.Services.Randomizer;
 using Code.Services.SaveLoad;
 using Code.Services.StaticData;
 using Code.UI.Factories;
@@ -34,6 +35,7 @@ namespace Code.Infrastructure.States
     {
       RegisterStaticDataService();
       _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+      _services.RegisterSingle<IRandomService>(new RandomService());
       _services.RegisterSingle<IProgressWatchersService>(new ProgressWatchersService());
       _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
       _services.RegisterSingle<IItemFactory>(new ItemFactory(_services.Single<IProgressWatchersService>()));
@@ -41,34 +43,36 @@ namespace Code.Infrastructure.States
         _services.Single<IProgressWatchersService>(),
         _services.Single<IPersistentProgressService>()
       ));
+      _services.RegisterSingle<ISlotFactory>(new SlotFactory(
+        _services.Single<IAssetProvider>(),
+        _services.Single<IProgressWatchersService>(),
+        _services.Single<IStaticDataService>()
+      ));
+      _services.RegisterSingle<IInventoryService>(new InventoryService(
+        _services.Single<IPersistentProgressService>(),
+        _services.Single<ISlotFactory>()
+      ));
       _services.RegisterSingle<IItemService>(new ItemService(
+        _services.Single<IStaticDataService>(), 
+        _services.Single<IInventoryService>(), _services.Single<IRandomService>()));
+      _services.RegisterSingle<ISlotService>(new SlotService(
         _services.Single<IStaticDataService>(),
-        _services.Single<IItemFactory>(),
-        _services.Single<ISaveLoadService>()
+        _services.Single<IPersistentProgressService>(),
+        _services.Single<IInventoryService>()
       ));
       _services.RegisterSingle<IHudFactory>(new HudFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IItemService>(),
         _services.Single<IProgressWatchersService>()
       ));
-      _services.RegisterSingle<ISlotFactory>(new SlotFactory(
-        _services.Single<IAssetProvider>(),
-        _services.Single<IProgressWatchersService>(),
-        _services.Single<IStaticDataService>()
-      ));
-      _services.RegisterSingle<ISlotService>(new SlotService(
-        _services.Single<IStaticDataService>(),
-        _services.Single<ISlotFactory>(),
-        _services.Single<IPersistentProgressService>(),
-        _services.Single<ISaveLoadService>()
-      ));
       _services.Single<ISlotFactory>().Initialize(_services.Single<ISlotService>());
       _services.RegisterSingle<IInventoryFactory>(new InventoryFactory(
         _services.Single<IAssetProvider>(),
         _services.Single<IProgressWatchersService>(),
         _services.Single<IStaticDataService>(),
-        _services.Single<IItemFactory>()
-      ));
+        _services.Single<IItemFactory>(),
+        _services.Single<ISaveLoadService>()
+        ));
     }
 
     private void RegisterStaticDataService()
