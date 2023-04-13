@@ -8,6 +8,8 @@ namespace Code.Data
     public OccupiedSlotsDictionary OccupiedSlots = new();
     public int UnlockedSlotsQuantity;
 
+    public event Action Changed;
+
     public void AddOccupiedSlot(int slotNumber, ItemData itemData)
     {
       ItemData occupiedSlotData = OccupiedSlots.Dictionary.TryGetValue(slotNumber, out ItemData data)
@@ -17,10 +19,15 @@ namespace Code.Data
       if (occupiedSlotData == null)
         OccupiedSlots.Dictionary.Add(slotNumber, itemData);
       else
-        occupiedSlotData.ChangeData(itemData);
+        occupiedSlotData.IncreaseQuantity(itemData.Quantity);
+      
+      Changed?.Invoke();
     }
 
-    public void Remove(int slotNumber) =>
+    public void RemoveSlot(int slotNumber)
+    {
       OccupiedSlots.Dictionary.Remove(slotNumber);
+      Changed?.Invoke();
+    }
   }
 }
