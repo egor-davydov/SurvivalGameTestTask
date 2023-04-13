@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Code.Data;
 using Code.Services;
 using Code.UI.InventoryWithSlots;
@@ -13,6 +14,6 @@ namespace Code.UI.Services
     void RemoveItem(int slotNumber);
     void DecreaseItemQuantity(ItemData itemData);
     int QuantityOf(string id);
-    int OccupiedSlotsCount { get; }
+    List<KeyValuePair<int, ItemData>> OccupiedSlots { get; }
   }
 }

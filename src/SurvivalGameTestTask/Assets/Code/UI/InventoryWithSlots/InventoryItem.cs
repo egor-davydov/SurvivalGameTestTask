@@ -9,8 +9,10 @@ namespace Code.UI.InventoryWithSlots
   {
     [SerializeField]
     private Image Icon;
+
     [SerializeField]
     private TextMeshProUGUI QuantityText;
+
     private int _quantity;
 
     public string Id { get; private set; }
@@ -27,7 +29,7 @@ namespace Code.UI.InventoryWithSlots
         QuantityText.text = $"{Quantity}";
       }
     }
-    
+
     public void Initialize(ItemStaticData itemStaticData, int quantity)
     {
       Id = itemStaticData.Id;
@@ -36,11 +38,5 @@ namespace Code.UI.InventoryWithSlots
       Quantity = quantity;
       Icon.sprite = itemStaticData.Icon;
     }
-  
-    public void IncreaseQuantity(int itemQuantity) =>
-      Quantity += itemQuantity;
-
-    public void DecreaseQuantity(int itemQuantity) =>
-      Quantity -= itemQuantity;
   }
 }

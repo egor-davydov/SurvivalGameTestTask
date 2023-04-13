@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Data;
-using Code.Services;
 using Code.Services.PersistentProgress;
 using Code.UI.Factories;
 using Code.UI.InventoryWithSlots;
@@ -17,12 +16,11 @@ namespace Code.UI.Services
     private readonly ISlotFactory _slotFactory;
 
     private List<InventorySlot> Slots => _inventory.Slots;
-    private List<KeyValuePair<int, ItemData>> OccupiedSlots => _inventory.OccupiedSlots;
     private Queue<LockedSlot> LockedSlots => _inventory.LockedSlots;
 
     private InventoryData InventoryProgressData => _progressService.Progress.InventoryData;
 
-    public int OccupiedSlotsCount => OccupiedSlots.Count;
+    public List<KeyValuePair<int, ItemData>> OccupiedSlots => _inventory.OccupiedSlots;
 
     public InventoryService(IPersistentProgressService progressService, ISlotFactory slotFactory)
     {

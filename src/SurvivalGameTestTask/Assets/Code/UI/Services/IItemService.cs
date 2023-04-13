@@ -1,6 +1,5 @@
 using Code.Services;
 using Code.StaticData;
-using Code.UI.InventoryWithSlots;
 
 namespace Code.UI.Services
 {
